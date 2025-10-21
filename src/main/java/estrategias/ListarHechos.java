@@ -1,10 +1,9 @@
-package Estrategias;
+package estrategias;
 
 import org.springframework.stereotype.Component;
 
-@Component("cambiar_estado_solicitud")
-public class CambiarEstadoSolicitud implements Orden {
-
+@Component("listar_hechos")
+public class ListarHechos implements Orden {
     @Override
     public String procesarMensaje(String mensaje) {
         return "";

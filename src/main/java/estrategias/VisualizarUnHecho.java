@@ -1,10 +1,9 @@
-package Estrategias;
+package estrategias;
 
 import org.springframework.stereotype.Component;
 
-@Component("hacer_solicitud_de_borrado")
-public class HacerSolicitudDeBorrado implements Orden {
-
+@Component("visualizar_un_hecho")
+public class VisualizarUnHecho implements Orden {
     @Override
     public String procesarMensaje(String mensaje) {
         return "";

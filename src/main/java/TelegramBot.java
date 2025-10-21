@@ -1,4 +1,4 @@
-import Estrategias.Orden;
+import estrategias.Orden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
