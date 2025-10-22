@@ -1,5 +1,6 @@
 package estrategias;
 
+import estrategias.Orden;
 import org.springframework.stereotype.Component;
 
 @Component("listar_hechos")
