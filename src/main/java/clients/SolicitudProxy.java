@@ -20,7 +20,12 @@ public class SolicitudProxy {
     public SolicitudProxy(ObjectMapper objectMapper){
         var env = System.getenv();
         this.endpoint = env.getOrDefault("URL_SOLICITUD","https://tpdds2025-solicitudes.onrender.com");
-        var retrofit = new Retrofit.Builder().baseUrl(endpoint).addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+
+        var retrofit = new Retrofit.Builder()
+                .baseUrl(endpoint)
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+                .build();
+
         this.service =retrofit.create(SolicitudRetrofitClient.class);
     }
 
@@ -53,5 +58,19 @@ public class SolicitudProxy {
         return solicitud;
     }
 
+    @SneakyThrows
+    public SolicitudDTO buscarPorId(String id) throws NoSuchElementException{
+        Response<SolicitudDTO> response = service.buscarPorId(id).execute();
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Error conectándose con el componente solicitud");
+        }
+
+        SolicitudDTO solicitud = response.body();
+        if(solicitud == null){
+            throw new NoSuchElementException("Solicitud no encontrada para este ID: " + id);
+        }
+        return solicitud;
+    }
 
 }

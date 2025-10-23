@@ -14,23 +14,26 @@ import static dtos.solicitud.EstadoSolicitudBorradoEnum.CREADA;
 public class HacerSolicitudDeBorrado implements Orden {
 
     @Autowired
-    private final SolicitudProxy client;
+    private SolicitudProxy client;
 
     @Override
     public String procesarMensaje(String mensaje) {
         String[] mensajeTokenizado = mensaje.split(" ");
+
+        if(mensajeTokenizado.length < 2){
+            return "Falta el hecho id, intenete nuevamente escribiendo lo siguiente: hacer_solicitud_de_borrado <HechoId> ";
+        }
+
         String hechoId = mensajeTokenizado[1];
+        SolicitudDTO dto = new SolicitudDTO(null, "Solicitud De Borrado", CREADA, hechoId);
 
-        SolicitudDTO dto = new SolicitudDTO(" ", "Solicitud De Borrado", CREADA, hechoId);
-        SolicitudDTO response =client.agregar(dto);
-
-        //TODO COMPLETAR
-
-
-
-
-
-        return "";
+        try {
+            SolicitudDTO creada = client.agregar(dto);
+            return "Solicitud creada correctamente con ID: " + creada.id();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Ocurrió un error al conectar con el servicio. Por favor, inténtelo más tarde.";
+        }
     }
 
 
