@@ -1,4 +1,4 @@
-package dtos.solicitud;
+package botTelegram.dtos.solicitud;
 
 
 public record SolicitudDTO(String id, String descripcion, EstadoSolicitudBorradoEnum estado, String hechoId) {

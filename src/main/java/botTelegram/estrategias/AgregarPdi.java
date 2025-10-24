@@ -1,11 +1,9 @@
-package estrategias;
-import clients.FuenteProxy;
-import dtos.Fuente.PdiDTO;
+package botTelegram.estrategias;
+import botTelegram.clients.FuenteProxy;
+import botTelegram.dtos.Fuente.PdiDTO;
 import org.springframework.stereotype.Component;
 
-import estrategias.Orden;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,15 +17,17 @@ public class AgregarPdi implements Orden {
     @Override
     public String procesarMensaje(String mensaje) {
         try {
-            String[] partes = mensaje.split("\\|");
-            if (partes.length < 2) {
+            String[] comandoYDatos = mensaje.split(" ", 2);
+            if (comandoYDatos.length < 2) {
                 return "Formato: /agregar_pdi hechoId|descripcion|[lugar]|[urlImagen]";
             }
 
-            String hechoId = partes[0].replace("/agregar_pdi", "").trim();
-            String descripcion = partes[1].trim();
+            String[] partes = comandoYDatos[1].split("\\|");
+            String hechoId = partes[0].trim();
+            String descripcion = partes.length > 1 ? partes[1].trim() : "";
             String lugar = partes.length > 2 ? partes[2].trim() : "Sin lugar";
             String urlImagen = partes.length > 3 ? partes[3].trim() : null;
+
 
             PdiDTO pdi = new PdiDTO(
                     null,
@@ -41,8 +41,8 @@ public class AgregarPdi implements Orden {
                     urlImagen
             );
 
-            PdiDTO creado = fuenteProxy.crearPdi(hechoId, pdi);
-            return " PDI agregado al hecho " + hechoId + ":\n" + creado.descripcion();
+            PdiDTO creado = fuenteProxy.agregarPdi(hechoId, pdi);
+            return " PDI agregado al hecho " + hechoId + ": " + creado.descripcion();
 
         } catch (Exception e) {
             e.printStackTrace();

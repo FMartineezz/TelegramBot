@@ -1,14 +1,13 @@
-package estrategias;
+package botTelegram.estrategias;
 
-import clients.SolicitudProxy;
-import dtos.solicitud.EstadoSolicitudBorradoEnum;
-import dtos.solicitud.SolicitudDTO;
+import botTelegram.clients.SolicitudProxy;
+import botTelegram.dtos.solicitud.SolicitudDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static dtos.solicitud.EstadoSolicitudBorradoEnum.CREADA;
+import static botTelegram.dtos.solicitud.EstadoSolicitudBorradoEnum.CREADA;
 
 @Component("hacer_solicitud_de_borrado")
 public class HacerSolicitudDeBorrado implements Orden {

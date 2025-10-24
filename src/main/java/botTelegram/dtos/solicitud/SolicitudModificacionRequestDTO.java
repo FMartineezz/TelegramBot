@@ -1,6 +1,5 @@
-package dtos.solicitud;
+package botTelegram.dtos.solicitud;
 
-import dtos.solicitud.EstadoSolicitudBorradoEnum;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,8 +1,8 @@
-package estrategias;
+package botTelegram.estrategias;
 
-import clients.SolicitudProxy;
-import dtos.solicitud.EstadoSolicitudBorradoEnum;
-import dtos.solicitud.SolicitudDTO;
+import botTelegram.clients.SolicitudProxy;
+import botTelegram.dtos.solicitud.EstadoSolicitudBorradoEnum;
+import botTelegram.dtos.solicitud.SolicitudDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

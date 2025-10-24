@@ -1,11 +1,9 @@
-package estrategias;
-import clients.FuenteProxy;
-import dtos.Fuente.HechoDTO;
+package botTelegram.estrategias;
+import botTelegram.clients.FuenteProxy;
+import botTelegram.dtos.Fuente.HechoDTO;
 import org.springframework.stereotype.Component;
 
-import estrategias.Orden;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,12 +17,17 @@ public class AgregarHecho implements Orden {
     @Override
     public String procesarMensaje(String mensaje) {
         try {
-            String[] partes = mensaje.split("\\|");
+            String[] comandoYDatos = mensaje.split(" ", 2);
+            if (comandoYDatos.length < 2) {
+                return "Formato: /agregar_hecho nombreColeccion|titulo|[categoria]|[ubicacion]";
+            }
+
+            String[] partes = comandoYDatos[1].split("\\|");
             if (partes.length < 2) {
                 return "Formato: /agregar_hecho nombreColeccion|titulo|[categoria]|[ubicacion]";
             }
 
-            String coleccion = partes[0].replace("/agregar_hecho", "").trim();
+            String coleccion = partes[0].trim();
             String titulo = partes[1].trim();
             String categoria = partes.length > 2 ? partes[2].trim() : "OTRO";
             String ubicacion = partes.length > 3 ? partes[3].trim() : "Sin ubicación";
@@ -40,8 +43,10 @@ public class AgregarHecho implements Orden {
                     "bot-telegram"
             );
 
-            HechoDTO creado = fuenteProxy.crearHecho(dto);
-            return " Hecho creado correctamente:\n" + creado.titulo() + "\nColección: " + creado.nombreColeccion();
+            HechoDTO creado = fuenteProxy.agregarHecho(dto);
+            return " Hecho creado correctamente:\n" +
+                    "Título: " + creado.titulo() + "\n" +
+                    "Colección: " + creado.nombreColeccion();
 
         } catch (Exception e) {
             e.printStackTrace();

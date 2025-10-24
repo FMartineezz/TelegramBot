@@ -1,7 +1,7 @@
-package clients;
+package botTelegram.clients;
 
-import dtos.solicitud.SolicitudDTO;
-import dtos.solicitud.SolicitudModificacionRequestDTO;
+import botTelegram.dtos.solicitud.SolicitudDTO;
+import botTelegram.dtos.solicitud.SolicitudModificacionRequestDTO;
 import org.springframework.web.bind.annotation.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,4 +1,4 @@
-package clients;
+package botTelegram.clients;
 
 public interface PdiRetrofitClient {
 }

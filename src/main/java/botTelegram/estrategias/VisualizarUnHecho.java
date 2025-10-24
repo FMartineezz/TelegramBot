@@ -1,4 +1,4 @@
-package estrategias;
+package botTelegram.estrategias;
 
 import org.springframework.stereotype.Component;
 
