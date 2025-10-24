@@ -19,7 +19,7 @@ public class AgregarPdi implements Orden {
         try {
             String[] comandoYDatos = mensaje.split(" ", 2);
             if (comandoYDatos.length < 2) {
-                return "Formato: agregar_pdi hechoId|descripcion|[lugar]|[urlImagen]";
+                return "Formato: /agregar_pdi hechoId|descripcion|[lugar]|[urlImagen]";
             }
 
             String[] partes = comandoYDatos[1].split("\\|");

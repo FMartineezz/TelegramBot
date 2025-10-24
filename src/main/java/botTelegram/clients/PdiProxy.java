@@ -36,13 +36,15 @@ public class PdiProxy {
         Response<List<PdiDTO>> response = service.getPdisPorHecho(hechoId).execute();
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Error conectándose con el componente Procesador PDI");
+            if (response.code() == 404) {
+                return List.of();
+            } else {
+                throw new RuntimeException("Error conectándose con el componente Procesador PDI");
+            }
         }
 
         List<PdiDTO> pdis = response.body();
-        if (pdis == null) {
-            throw new IOException("Error: respuesta vacía al obtener PDIs por hecho");
-        }
+
         return pdis;
     }
 }

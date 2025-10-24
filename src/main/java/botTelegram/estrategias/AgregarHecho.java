@@ -19,12 +19,12 @@ public class AgregarHecho implements Orden {
         try {
             String[] comandoYDatos = mensaje.split(" ", 2);
             if (comandoYDatos.length < 2) {
-                return "Formato: agregar_hecho nombreColeccion|titulo|[categoria]|[ubicacion]";
+                return "Formato: /agregar_hecho nombreColeccion|titulo|[categoria]|[ubicacion]";
             }
 
             String[] partes = comandoYDatos[1].split("\\|");
             if (partes.length < 2) {
-                return "Formato: agregar_hecho nombreColeccion|titulo|[categoria]|[ubicacion]";
+                return "Formato: /agregar_hecho nombreColeccion|titulo|[categoria]|[ubicacion]";
             }
 
             String coleccion = partes[0].trim();
