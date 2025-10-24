@@ -16,12 +16,12 @@ public class VisualizarUnHecho implements Orden {
 
     @Autowired private FuenteProxy fuenteProxy;
     @Autowired private PdiProxy pdiProxy;
-    @Autowired private ObjectMapper mapper; // ya configurado con JavaTime + snake_case
+    @Autowired private ObjectMapper mapper;
 
     @Override
     public String procesarMensaje(String mensaje) {
         try {
-            // uso: "visualizar_hecho 1"
+
             String[] tokens = mensaje.trim().split("\\s+");
             if (tokens.length < 2) return "Uso: visualizar_hecho <hechoId>";
             String hechoId = tokens[1];
@@ -31,17 +31,17 @@ public class VisualizarUnHecho implements Orden {
 
             StringBuilder sb = new StringBuilder();
 
-            // Encabezado: el Hecho (tal cual pediste)
             sb.append(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(hecho)).append("\n");
             sb.append("Pdis:\n");
 
-            // Lista de PDIs (tal cual pediste, con snake_case en campos)
-            for (PdiDTO p : pdis) {
-                // imprimimos con snake_case: el DTO ya mapea; para serializar en snake usamos el mapper global
-                sb.append(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(p)).append("\n");
+            if (pdis == null || pdis.isEmpty()) {
+                sb.append("\"No hay Pdis para el hecho ").append(hechoId).append("\"");
+            } else {
+                for (PdiDTO p : pdis) {
+                    sb.append(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(p)).append("\n");
+                }
             }
 
-            // Telegram limita ~4096 chars por mensaje: si excede, recortá o partilo.
             return sb.toString().trim();
 
         } catch (Exception e) {

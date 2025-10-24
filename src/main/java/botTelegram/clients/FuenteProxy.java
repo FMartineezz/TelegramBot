@@ -64,7 +64,14 @@ public class FuenteProxy {
     @SneakyThrows
     public HechoDTO getHecho(String id) throws IOException {
         Response<HechoDTO> response = service.getHecho(id).execute();
-        if (!response.isSuccessful()) throw new RuntimeException(" Fuente GET /hecho/" + id + " → HTTP " + response.code());
+        if (!response.isSuccessful())
+        {
+            if(response.code() == 404){
+                throw new IOException("Hecho " + id + " no existe");
+            }else{
+                throw new RuntimeException(" Fuente GET /hecho/" + id + " → HTTP " + response.code()+ response.message());
+            }
+        }
         var body = response.body();
         if (body == null) throw new IOException(" Fuente: cuerpo vacío");
         return body;
