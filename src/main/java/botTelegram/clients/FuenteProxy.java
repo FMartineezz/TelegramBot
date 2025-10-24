@@ -3,6 +3,7 @@ package botTelegram.clients;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import botTelegram.dtos.Fuente.HechoDTO;
 import botTelegram.dtos.Fuente.PdiDTO;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
@@ -19,11 +20,15 @@ public class FuenteProxy {
 
     public FuenteProxy(ObjectMapper objectMapper) {
         var env = System.getenv();
-        this.endpoint = env.getOrDefault("URL_FUENTE", "https://fuentegrupo10-1.onrender.com");
+        this.endpoint = env.getOrDefault("URL_FUENTE", "https://fuentegrupo10-1.onrender.com/");
+
+        ObjectMapper mapper = objectMapper.copy();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.setPropertyNamingStrategy(com.fasterxml.jackson.databind.PropertyNamingStrategies.SNAKE_CASE);
 
         var retrofit = new Retrofit.Builder()
                 .baseUrl(endpoint.endsWith("/") ? endpoint : endpoint + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+                .addConverterFactory(JacksonConverterFactory.create(mapper))
                 .build();
 
         this.service = retrofit.create(FuenteRetrofitClient.class);
@@ -47,7 +52,7 @@ public class FuenteProxy {
 
     @SneakyThrows
     public PdiDTO agregarPdi(String hechoId, PdiDTO pdiDTO) throws IOException {
-        Response<PdiDTO> response = service.crearPdi(hechoId, pdiDTO).execute();
+        Response<PdiDTO> response = service.crearPdi(pdiDTO).execute();
 
         if (!response.isSuccessful()) {
             throw new RuntimeException(" Error conectándose con el componente Fuente");
