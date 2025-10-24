@@ -1,6 +1,4 @@
-package estrategias;
-
-import estrategias.Orden;
+package botTelegram.estrategias;
 
 import java.util.List;
 
@@ -10,8 +8,8 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import clients.AgregadorProxy;
-import dtos.Fuente.HechoDTO;
+import botTelegram.clients.AgregadorProxy;
+import botTelegram.dtos.Fuente.HechoDTO;
 
 @Component("listar_hechos")
 public class ListarHechos implements Orden {

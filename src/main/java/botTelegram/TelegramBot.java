@@ -1,4 +1,6 @@
-import estrategias.Orden;
+package botTelegram;
+
+import botTelegram.estrategias.Orden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -9,6 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.Map;
 
 @Service
+@SuppressWarnings("deprecation")
 public class TelegramBot extends TelegramLongPollingBot {
     @Autowired
     private Map<String, Orden> estrategias;
@@ -47,8 +50,14 @@ public class TelegramBot extends TelegramLongPollingBot {
 
 
 
-            @Override
+    @Override
     public String getBotUsername() {
-          return "";
+        return System.getenv().getOrDefault("NOMBRE_BOT", "grupo10_bot");
     }
+
+    @Override
+    public String getBotToken() {
+        return System.getenv().getOrDefault("TOKEN_BOT", "8485872797:AAHlGPgw3l2J1aFScxy3tddhCnPLIEm4aIM");
+    }
+
 }

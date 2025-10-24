@@ -1,8 +1,7 @@
-package clients;
+package botTelegram.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dtos.Fuente.HechoDTO;
-import dtos.Fuente.PdiDTO;
+import botTelegram.dtos.Fuente.HechoDTO;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;

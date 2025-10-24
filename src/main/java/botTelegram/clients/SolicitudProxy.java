@@ -1,8 +1,8 @@
-package clients;
+package botTelegram.clients;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dtos.solicitud.EstadoSolicitudBorradoEnum;
-import dtos.solicitud.SolicitudDTO;
-import dtos.solicitud.SolicitudModificacionRequestDTO;
+import botTelegram.dtos.solicitud.EstadoSolicitudBorradoEnum;
+import botTelegram.dtos.solicitud.SolicitudDTO;
+import botTelegram.dtos.solicitud.SolicitudModificacionRequestDTO;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;

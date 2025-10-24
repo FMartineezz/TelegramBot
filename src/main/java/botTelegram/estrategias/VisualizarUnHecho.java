@@ -1,4 +1,4 @@
-package estrategias;
+package botTelegram.estrategias;
 
 import clients.PdiProxy;
 import com.fasterxml.jackson.core.JsonProcessingException;

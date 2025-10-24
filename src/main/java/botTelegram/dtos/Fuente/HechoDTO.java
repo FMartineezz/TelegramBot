@@ -1,4 +1,4 @@
-package dtos.Fuente;
+package botTelegram.dtos.Fuente;
 
 import java.time.LocalDateTime;
 import java.util.List;

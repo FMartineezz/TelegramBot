@@ -1,8 +1,8 @@
-package clients;
+package botTelegram.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dtos.Fuente.HechoDTO;
-import dtos.Fuente.PdiDTO;
+import botTelegram.dtos.Fuente.HechoDTO;
+import botTelegram.dtos.Fuente.PdiDTO;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
@@ -22,7 +22,7 @@ public class FuenteProxy {
         this.endpoint = env.getOrDefault("URL_FUENTE", "https://fuentegrupo10-1.onrender.com");
 
         var retrofit = new Retrofit.Builder()
-                .baseUrl(endpoint)
+                .baseUrl(endpoint.endsWith("/") ? endpoint : endpoint + "/")
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
 
@@ -30,32 +30,32 @@ public class FuenteProxy {
     }
 
     @SneakyThrows
-    public HechoDTO crearHecho(HechoDTO dto) throws IOException {
-        Response<HechoDTO> response = service.crearHecho(dto).execute();
+    public HechoDTO agregarHecho(HechoDTO hechoDTO) throws IOException {
+        Response<HechoDTO> response = service.crearHecho(hechoDTO).execute();
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Error conectándose con el componente Fuente");
+            throw new RuntimeException(" Error conectándose con el componente Fuente");
         }
 
         HechoDTO hecho = response.body();
         if (hecho == null) {
-            throw new IOException("Error al crear el Hecho");
+            throw new IOException(" Error al crear el Hecho — respuesta vacía");
         }
 
         return hecho;
     }
 
     @SneakyThrows
-    public PdiDTO crearPdi(String hechoId, PdiDTO dto) throws IOException {
-        Response<PdiDTO> response = service.crearPdi(hechoId, dto).execute();
+    public PdiDTO agregarPdi(String hechoId, PdiDTO pdiDTO) throws IOException {
+        Response<PdiDTO> response = service.crearPdi(hechoId, pdiDTO).execute();
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Error conectándose con el componente Fuente");
+            throw new RuntimeException(" Error conectándose con el componente Fuente");
         }
 
         PdiDTO pdi = response.body();
         if (pdi == null) {
-            throw new IOException("Error al crear el PDI");
+            throw new IOException(" Error al crear el PDI — respuesta vacía");
         }
 
         return pdi;

@@ -1,7 +1,7 @@
-package clients;
+package botTelegram.clients;
 
-import dtos.Fuente.HechoDTO;
-import dtos.Fuente.PdiDTO;
+import botTelegram.dtos.Fuente.HechoDTO;
+import botTelegram.dtos.Fuente.PdiDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

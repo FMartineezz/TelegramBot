@@ -1,4 +1,4 @@
-package dtos.solicitud;
+package botTelegram.dtos.solicitud;
 
 public enum EstadoSolicitudBorradoEnum {
     CREADA,

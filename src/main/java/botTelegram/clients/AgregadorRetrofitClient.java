@@ -1,8 +1,8 @@
-package clients;
+package botTelegram.clients;
 
 import java.util.List;
 
-import dtos.Fuente.HechoDTO;
+import botTelegram.dtos.Fuente.HechoDTO;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
