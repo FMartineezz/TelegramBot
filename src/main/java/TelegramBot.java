@@ -13,7 +13,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Autowired
     private Map<String, Orden> estrategias;
 
-            @Override
+    @Override
     public void onUpdateReceived(Update update) {
            final String messageTextReceived = update.getMessage().getText();
            Long chatId = update.getMessage().getChatId();
