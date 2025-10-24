@@ -52,12 +52,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return System.getenv().getOrDefault("NOMBRE_BOT", "MiBotDEV_bot");
+        return System.getenv().getOrDefault("NOMBRE_BOT", "grupo10_bot");
     }
 
     @Override
     public String getBotToken() {
-        return System.getenv().getOrDefault("TOKEN_BOT", "7601802023:AAH8YtUqv0_J7RgppmGpuEE_SuupkaJ52WM");
+        return System.getenv().getOrDefault("TOKEN_BOT", "8485872797:AAHlGPgw3l2J1aFScxy3tddhCnPLIEm4aIM");
     }
 
 }
