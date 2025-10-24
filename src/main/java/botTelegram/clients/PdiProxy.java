@@ -1,7 +1,7 @@
-package clients;
+package botTelegram.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dtos.Fuente.PdiDTO;
+import botTelegram.dtos.Fuente.PdiDTO;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
@@ -32,7 +32,7 @@ public class PdiProxy {
     }
 
     @SneakyThrows
-    public List<dtos.Fuente.PdiDTO> getPdisPorHecho(String hechoId) throws IOException {
+    public List<botTelegram.dtos.Fuente.PdiDTO> getPdisPorHecho(String hechoId) throws IOException {
         Response<List<PdiDTO>> response = service.getPdisPorHecho(hechoId).execute();
 
         if (!response.isSuccessful()) {

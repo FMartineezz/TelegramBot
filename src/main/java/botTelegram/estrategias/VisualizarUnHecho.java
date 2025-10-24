@@ -1,9 +1,9 @@
 package botTelegram.estrategias;
 
-import clients.PdiProxy;
+import botTelegram.clients.PdiProxy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dtos.Fuente.PdiDTO;
+import botTelegram.dtos.Fuente.PdiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
