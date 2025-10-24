@@ -60,4 +60,13 @@ public class FuenteProxy {
 
         return pdi;
     }
+
+    @SneakyThrows
+    public HechoDTO getHecho(String id) throws IOException {
+        Response<HechoDTO> response = service.getHecho(id).execute();
+        if (!response.isSuccessful()) throw new RuntimeException(" Fuente GET /hecho/" + id + " → HTTP " + response.code());
+        var body = response.body();
+        if (body == null) throw new IOException(" Fuente: cuerpo vacío");
+        return body;
+    }
 }
