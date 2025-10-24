@@ -45,6 +45,7 @@ public class AgregarHecho implements Orden {
 
             HechoDTO creado = fuenteProxy.agregarHecho(dto);
             return " Hecho creado correctamente:\n" +
+                    "Id: " + creado.id() + "\n" +
                     "Título: " + creado.titulo() + "\n" +
                     "Colección: " + creado.nombreColeccion();
 

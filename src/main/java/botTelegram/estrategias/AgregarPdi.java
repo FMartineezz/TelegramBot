@@ -53,7 +53,7 @@ public class AgregarPdi implements Orden {
             StringBuilder respuesta = new StringBuilder();
             respuesta.append(" PDI agregado al hecho ").append(hechoId)
                     .append("\n Descripción: ").append(creado.descripcion());
-            if (urlImagen != null) respuesta.append("\n📷 Imagen: ").append(urlImagen);
+            if (urlImagen != null) respuesta.append("\n Imagen: ").append(urlImagen);
             if (!etiquetas.isEmpty())
                 respuesta.append("\n Etiquetas: ").append(String.join(", ", etiquetas));
             respuesta.append("\n Lugar: ").append(lugar);

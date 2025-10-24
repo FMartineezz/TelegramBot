@@ -24,7 +24,6 @@ public class FuenteProxy {
 
         ObjectMapper mapper = objectMapper.copy();
         mapper.registerModule(new JavaTimeModule());
-        mapper.setPropertyNamingStrategy(com.fasterxml.jackson.databind.PropertyNamingStrategies.SNAKE_CASE);
 
         var retrofit = new Retrofit.Builder()
                 .baseUrl(endpoint.endsWith("/") ? endpoint : endpoint + "/")
@@ -39,12 +38,16 @@ public class FuenteProxy {
         Response<HechoDTO> response = service.crearHecho(hechoDTO).execute();
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException(" Error conectándose con el componente Fuente");
+            String errorBody = null;
+            try { errorBody = response.errorBody() != null ? response.errorBody().string() : "(sin cuerpo)"; }
+            catch (Exception ignored) {}
+            throw new RuntimeException("Error conectándose con Fuente: HTTP " + response.code() +
+                    " " + response.message() + " | Body: " + errorBody);
         }
 
         HechoDTO hecho = response.body();
         if (hecho == null) {
-            throw new IOException(" Error al crear el Hecho — respuesta vacía");
+            throw new IOException("Error al crear el Hecho — respuesta vacía");
         }
 
         return hecho;
