@@ -4,18 +4,15 @@ import botTelegram.dtos.solicitud.SolicitudDTO;
 import botTelegram.dtos.solicitud.SolicitudModificacionRequestDTO;
 import org.springframework.web.bind.annotation.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-
+import retrofit2.http.*;
 
 public interface SolicitudRetrofitClient {
 
     @POST("/solicitudes")
-    Call<SolicitudDTO> agregar(@RequestBody SolicitudDTO dto);
+    Call<SolicitudDTO> agregar(@Body SolicitudDTO dto);
 
-    @POST("/solicitudes/{id}")
-    Call<SolicitudDTO> modificar(@Path("id") String id, @RequestBody SolicitudModificacionRequestDTO body);
+    @PATCH("/solicitudes/{id}")
+    Call<SolicitudDTO> modificar(@Path("id") String id, @Body SolicitudModificacionRequestDTO body);
 
     @GET("/solicitudes/{id}")
     Call<SolicitudDTO> buscarPorId(@Path("id") String id);

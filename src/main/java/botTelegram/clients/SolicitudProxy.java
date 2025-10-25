@@ -19,7 +19,7 @@ public class SolicitudProxy {
 
     public SolicitudProxy(ObjectMapper objectMapper){
         var env = System.getenv();
-        this.endpoint = env.getOrDefault("URL_SOLICITUD","https://tpdds2025-solicitudes.onrender.com");
+        this.endpoint = env.getOrDefault("URL_SOLICITUD", "https://tpdds2025-solicitudes.onrender.com");
 
         var retrofit = new Retrofit.Builder()
                 .baseUrl(endpoint)
