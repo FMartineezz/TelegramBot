@@ -44,4 +44,19 @@ public class AgregadorProxy {
 
         return hecho;
     }
+    @SneakyThrows
+    public List<HechoDTO> getHechos(String colectionName,int page,int size) throws IOException {
+        Response<List<HechoDTO>> response = service.getHechosPorColleccion(colectionName,page,size).execute();
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Error conectándose con el componente Agregador");
+        }
+
+        List<HechoDTO> hecho = response.body();
+        if (hecho == null) {
+            throw new IOException("Error al obtener los hechos por coleccion en Agregador");
+        }
+
+        return hecho;
+    }
 }
