@@ -9,7 +9,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -34,9 +37,18 @@ public class SolicitudProxy {
         Response<SolicitudDTO> response = service.agregar(solicitudDTO).execute();
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Error conectándose con el componente solicitud");
-        }
+            assert response.errorBody() != null;
+            String message = extractMessage(response.errorBody().string());
 
+            switch (response.code()) {
+                case 404:
+                    throw new NoSuchElementException(message);
+                case 400:
+                    throw new InvalidParameterException(message);
+                case 409:
+                    throw new KeyAlreadyExistsException(message);
+            }
+        }
         SolicitudDTO solicitud = response.body();
         if (solicitud == null) {
             throw new IOException("Error al agregar la solcitud");
@@ -73,4 +85,13 @@ public class SolicitudProxy {
         return solicitud;
     }
 
+    private String extractMessage(String errorBody) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> json = mapper.readValue(errorBody, Map.class);
+            return (String) json.get("message");
+        } catch (Exception e) {
+            return "Error desconocido";
+        }
+    }
 }

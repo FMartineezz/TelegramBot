@@ -18,34 +18,34 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-           final String messageTextReceived = update.getMessage().getText();
-           Long chatId = update.getMessage().getChatId();
+        final String messageTextReceived = update.getMessage().getText();
+        Long chatId = update.getMessage().getChatId();
 
-           Orden orden = obtenerOrden(messageTextReceived);
+        Orden orden = obtenerOrden(messageTextReceived);
 
-           SendMessage responseMsg = new SendMessage();
-           responseMsg.setChatId(chatId);
+        SendMessage responseMsg = new SendMessage();
+        responseMsg.setChatId(chatId);
 
-           if(orden != null) {
-              String respuesta = orden.procesarMensaje(messageTextReceived);
-              responseMsg.setText(respuesta);
-           }else{
-              String comandosDisponibles = String.join(", ",estrategias.keySet()) ;
-              responseMsg.setText("comando no disponible, intente con alguno de los siguientes: " +comandosDisponibles);
-           }
+        if(orden != null) {
+            String respuesta = orden.procesarMensaje(messageTextReceived);
+            responseMsg.setText(respuesta);
+        }else{
+            String comandosDisponibles = String.join(", ",estrategias.keySet()) ;
+            responseMsg.setText("comando no disponible, intente con alguno de los siguientes: " +comandosDisponibles);
+        }
 
-           try {
-              execute(responseMsg);
-           } catch (TelegramApiException e) {
-              throw new RuntimeException(e);
-           }
+        try {
+            execute(responseMsg);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     public Orden obtenerOrden(String mensaje) {
-           String[] mensajeTokenizado = mensaje.split(" ");
-           String comando = mensajeTokenizado[0];
-           return estrategias.get(comando);
+        String[] mensajeTokenizado = mensaje.split(" ");
+        String comando = mensajeTokenizado[0];
+        return estrategias.get(comando);
     }
 
 

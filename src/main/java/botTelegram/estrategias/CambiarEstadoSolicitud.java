@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 @Component("cambiar_estado_solicitud")
 public class CambiarEstadoSolicitud implements Orden {
@@ -32,12 +33,17 @@ public class CambiarEstadoSolicitud implements Orden {
             return "Estado inválido. Estados válidos: " + Arrays.toString(EstadoSolicitudBorradoEnum.values());
         }
 
+        SolicitudDTO solicitudOriginal;
 
-        SolicitudDTO solicitudOriginal = client.buscarPorId(id);
+        try {
+            solicitudOriginal = client.buscarPorId(id);
+        } catch (NoSuchElementException e) {
+            return "La solicitud con el id " + id + " no existe";
+        }
 
         try {
             SolicitudDTO soliModificada = client.modificar(id, nuevoEstado, solicitudOriginal.descripcion());
-            return "Solicitud con id : " + id + "fue modificada correctamente, y ahora su estado es : " + nuevoEstado;
+            return "Solicitud con id : " + id + " fue modificada correctamente, y ahora su estado es : " + nuevoEstado;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

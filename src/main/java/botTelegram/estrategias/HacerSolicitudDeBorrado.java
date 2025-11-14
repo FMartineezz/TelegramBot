@@ -5,7 +5,10 @@ import botTelegram.dtos.solicitud.SolicitudDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.util.NoSuchElementException;
 
 import static botTelegram.dtos.solicitud.EstadoSolicitudBorradoEnum.CREADA;
 
@@ -28,7 +31,12 @@ public class HacerSolicitudDeBorrado implements Orden {
 
         try {
             SolicitudDTO creada = client.agregar(dto);
-            return "Solicitud creada correctamente con ID: " + creada.id();
+            return "Solicitud creada correctamente con ID: " + creada.id() + "\n"+
+                    "Descripcion : " + creada.descripcion() + "\n" +
+                    "Estado : "+ creada.estado() + "\n" +
+                    "HechoId : "+ creada.hechoId();
+        }catch (InvalidParameterException | NoSuchElementException | KeyAlreadyExistsException e ){
+            return e.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
             return "Ocurrió un error al conectar con el servicio. Por favor, inténtelo más tarde.";
