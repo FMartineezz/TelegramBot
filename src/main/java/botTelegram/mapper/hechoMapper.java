@@ -10,4 +10,5 @@ public class hechoMapper {
                "Categoría: " + hecho.categoria() + "\n" +
                "Etiquetas: " + String.join(", ", hecho.etiquetas()) + "\n";
     }
+
 }

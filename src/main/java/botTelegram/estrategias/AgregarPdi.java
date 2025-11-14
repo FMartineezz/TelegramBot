@@ -1,6 +1,8 @@
 package botTelegram.estrategias;
 import botTelegram.clients.FuenteProxy;
 import botTelegram.dtos.Fuente.PdiDTO;
+import botTelegram.mapper.PDIMapper;
+
 import org.springframework.stereotype.Component;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,15 +52,15 @@ public class AgregarPdi implements Orden {
 
             PdiDTO creado = fuenteProxy.agregarPdi(hechoId, pdi);
 
-            StringBuilder respuesta = new StringBuilder();
+            /*StringBuilder respuesta = new StringBuilder();
             respuesta.append(" PDI agregado al hecho ").append(hechoId)
                     .append("\n Descripción: ").append(creado.descripcion());
             if (urlImagen != null) respuesta.append("\n Imagen: ").append(urlImagen);
             if (!etiquetas.isEmpty())
                 respuesta.append("\n Etiquetas: ").append(String.join(", ", etiquetas));
             respuesta.append("\n Lugar: ").append(lugar);
-
-            return respuesta.toString();
+*/
+            return PDIMapper.mapHechoPDI(creado, etiquetas);
 
         } catch (Exception e) {
             e.printStackTrace();
