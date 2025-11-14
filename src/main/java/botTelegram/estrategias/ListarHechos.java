@@ -27,12 +27,14 @@ public class ListarHechos implements Orden {
             }
 
             String[] partes = comandoYDatos[1].split("\\|");
-            if (partes.length < 2) {
-                return "Formato: /listar_hechos nombreColeccion|pagina|tamaño";
-            }
             String coleccion = partes[0].trim();
-            int pagina = partes[1].trim().length() > 0 ? Integer.parseInt(partes[1].trim()) : 0;
-            int size = partes[2].trim().length() > 0 ? Integer.parseInt(partes[2].trim()) : 0;
+            int pagina =  0;
+            int size =  0;
+            if(partes.length >= 3){
+                pagina = partes[1].trim().length() > 0 ? Integer.parseInt(partes[1].trim()) : 0;
+                size = partes[2].trim().length() > 0 ? Integer.parseInt(partes[2].trim()) : 0;
+            }
+            
 
             List<HechoDTO> hechos;
             if(size >0){
@@ -47,7 +49,7 @@ public class ListarHechos implements Orden {
                 .collect(Collectors.joining(",\n"));
             } catch (Exception e) {
                 e.printStackTrace();
-                return " Error al obtener Hechos por coleccion en Agregador: " + e.getMessage();
+                return " Error en el mapeo: " + e.getMessage();
             }
         }catch (Exception e) {
             e.printStackTrace();
