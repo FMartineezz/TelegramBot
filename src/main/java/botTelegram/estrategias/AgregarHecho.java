@@ -36,7 +36,7 @@ public class AgregarHecho implements Orden {
                     null,
                     coleccion,
                     titulo,
-                    List.of("bot", "dds"),
+                    List.of(),
                     categoria,
                     ubicacion,
                     LocalDateTime.now(),
@@ -44,14 +44,15 @@ public class AgregarHecho implements Orden {
             );
 
             HechoDTO creado = fuenteProxy.agregarHecho(dto);
-            return " Hecho creado correctamente:\n" +
-                    "Id: " + creado.id() + "\n" +
-                    "Título: " + creado.titulo() + "\n" +
-                    "Colección: " + creado.nombreColeccion();
+
+            return "️ Hecho creado correctamente:\n" +
+                    " Id: " + creado.id() + "\n" +
+                    " Título: " + creado.titulo() + "\n" +
+                    " Colección: " + creado.nombreColeccion();
 
         } catch (Exception e) {
             e.printStackTrace();
-            return " Error al crear hecho: " + e.getMessage();
+            return "Error al crear hecho: " + e.getMessage();
         }
     }
 }

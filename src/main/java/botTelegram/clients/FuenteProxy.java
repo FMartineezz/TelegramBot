@@ -33,6 +33,7 @@ public class FuenteProxy {
         this.service = retrofit.create(FuenteRetrofitClient.class);
     }
 
+
     @SneakyThrows
     public HechoDTO agregarHecho(HechoDTO hechoDTO) throws IOException {
         Response<HechoDTO> response = service.crearHecho(hechoDTO).execute();
@@ -54,11 +55,16 @@ public class FuenteProxy {
     }
 
     @SneakyThrows
-    public PdiDTO agregarPdi(String hechoId, PdiDTO pdiDTO) throws IOException {
+    public PdiDTO agregarPdi(PdiDTO pdiDTO) throws IOException {
         Response<PdiDTO> response = service.crearPdi(pdiDTO).execute();
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException(" Error conectándose con el componente Fuente");
+            String errorBody = null;
+            try { errorBody = response.errorBody() != null ? response.errorBody().string() : "(sin cuerpo)"; }
+            catch (Exception ignored) {}
+
+            throw new RuntimeException(" Error conectándose con el componente Fuente: HTTP "
+                    + response.code() + " " + response.message() + " | Body: " + errorBody);
         }
 
         PdiDTO pdi = response.body();
