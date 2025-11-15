@@ -42,7 +42,7 @@ public class VisualizarUnHecho implements Orden {
             } else {
                 
                 for (PdiDTO p : pdis) {
-                    sb.append(PDIMapper.mapHechoPDI(p, p.etiquetas())).append("\n");
+                    sb.append(PDIMapper.mapHechoPDI(p)).append("\n");
                 }
             }
 
