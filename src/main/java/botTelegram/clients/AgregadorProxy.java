@@ -52,6 +52,9 @@ public class AgregadorProxy {
         Response<List<HechoDTO>> response = service.getHechosPorColleccion(colectionName,page,size).execute();
 
         if (!response.isSuccessful()) {
+            if(response.code() == 404){
+                throw new IOException("Colección no encontrada en Agregador");
+            }
             throw new RuntimeException("Error conectándose con el componente Agregador");
         }
 

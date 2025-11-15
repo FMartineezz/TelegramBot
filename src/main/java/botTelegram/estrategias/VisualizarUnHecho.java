@@ -6,6 +6,9 @@ import botTelegram.dtos.Fuente.HechoDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import botTelegram.dtos.Fuente.PdiDTO;
+import botTelegram.mapper.PDIMapper;
+import botTelegram.mapper.hechoMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,15 +33,16 @@ public class VisualizarUnHecho implements Orden {
             List<PdiDTO> pdis = pdiProxy.getPdisPorHecho(hechoId);
 
             StringBuilder sb = new StringBuilder();
-
-            sb.append(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(hecho)).append("\n");
-            sb.append("Pdis:\n");
+            sb.append(hechoMapper.mapearHecho(hecho));
+            //sb.append(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(hecho)).append("\n");
+            //sb.append("Pdis:\n");
 
             if (pdis == null || pdis.isEmpty()) {
-                sb.append("\"No hay Pdis para el hecho ").append(hechoId).append("\"");
+                //sb.append("\"No hay Pdis para el hecho ").append(hechoId).append("\"");
             } else {
+                
                 for (PdiDTO p : pdis) {
-                    sb.append(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(p)).append("\n");
+                    sb.append(PDIMapper.mapHechoPDI(p, p.etiquetas())).append("\n");
                 }
             }
 
