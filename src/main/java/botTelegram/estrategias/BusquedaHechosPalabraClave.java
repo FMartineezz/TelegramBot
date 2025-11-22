@@ -93,6 +93,8 @@ public class BusquedaHechosPalabraClave implements Orden{
                     Set<String> etiquetas = etiquetasList != null
                             ? new LinkedHashSet<>(etiquetasList)
                             : Set.of();
+                    Object textoOcrObj = pdi.get("texto_ocr");
+                    String textoOcr = textoOcrObj != null ? String.valueOf(textoOcrObj) : null;
 
                     sb.append("  - ID: ").append(pdiId).append("\n");
                     if (desc != null && !"null".equals(desc)) {
@@ -100,6 +102,9 @@ public class BusquedaHechosPalabraClave implements Orden{
                     }
                     if (!etiquetas.isEmpty()) {
                         sb.append("    Tags: ").append(etiquetas).append("\n");
+                    }
+                    if (textoOcr != null && !"null".equals(textoOcr) && !textoOcr.isBlank()) {
+                        sb.append("    OCR: ").append(textoOcr).append("\n");
                     }
                 }
             }
