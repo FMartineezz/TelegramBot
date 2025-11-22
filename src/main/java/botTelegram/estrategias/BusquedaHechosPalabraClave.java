@@ -6,9 +6,7 @@ import botTelegram.clients.BusquedaRetrofitClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Component("buscar_hecho_por_palabra_clave")
 public class BusquedaHechosPalabraClave implements Orden{
@@ -61,17 +59,18 @@ public class BusquedaHechosPalabraClave implements Orden{
         for (Map<String, Object> doc : lista) {
 
             String id = String.valueOf(doc.get("id"));
+            String hechoId = String.valueOf(doc.get("hechoId"));
             String nombre = String.valueOf(doc.get("titulo"));
-            String tipo = String.valueOf(doc.get("tipo"));
 
-            List<String> tags = (List<String>) doc.get("tags");
-            String tagsString = tags != null ? String.join(", ", tags) : "Sin tags";
+            List<String> etiquetasList = (List<String>) doc.get("etiquetas");
+            Set<String> etiquetas = etiquetasList != null ? new HashSet<>(etiquetasList) : Set.of();
+
 
 
             sb.append("ID: ").append(id).append("\n")
+                    .append("hechoId: ").append(hechoId).append("\n")
                     .append("Nombre: ").append(nombre).append("\n")
-                    .append("Tipo: ").append(tipo).append("\n")
-                    .append("Tags: ").append(tagsString).append("\n")
+                    .append("Tags: ").append(etiquetas).append("\n")
                     .append("-------------------------\n");
         }
 
