@@ -54,28 +54,62 @@ public class BusquedaHechosPalabraClave implements Orden{
 
     public String formatearListado(Map<String, Object> documentos) {
         StringBuilder sb = new StringBuilder();
-        List<Map<String, Object>> lista = (List<Map<String, Object>>) documentos.get("items");
 
-        for (Map<String, Object> doc : lista) {
+        List<Map<String, Object>> items =
+                (List<Map<String, Object>>) documentos.get("items");
 
-            String id = String.valueOf(doc.get("id"));
-            String hechoId = String.valueOf(doc.get("hechoId"));
-            String nombre = String.valueOf(doc.get("titulo"));
+        if (items == null || items.isEmpty()) {
+            return "No se encontraron resultados para esa búsqueda.";
+        }
 
-            List<String> etiquetasList = (List<String>) doc.get("etiquetas");
-            Set<String> etiquetas = etiquetasList != null ? new HashSet<>(etiquetasList) : Set.of();
+        for (Map<String, Object> item : items) {
 
+            // ---- HECHO ----
+            Map<String, Object> hecho = (Map<String, Object>) item.get("hecho");
 
+            String hechoId     = hecho != null ? String.valueOf(hecho.get("id")) : "-";
+            String titulo      = hecho != null ? String.valueOf(hecho.get("titulo")) : "-";
+            String coleccion   = hecho != null ? String.valueOf(hecho.get("coleccion")) : null;
 
-            sb.append("ID: ").append(id).append("\n")
-                    .append("hechoId: ").append(hechoId).append("\n")
-                    .append("Nombre: ").append(nombre).append("\n")
-                    .append("Tags: ").append(etiquetas).append("\n")
-                    .append("-------------------------\n");
+            sb.append("Hecho ID: ").append(hechoId).append("\n")
+                    .append("Título: ").append(titulo).append("\n");
+
+            if (coleccion != null && !"null".equals(coleccion)) {
+                sb.append("Colección: ").append(coleccion).append("\n");
+            }
+
+            // ---- PDIS DEL HECHO ----
+            List<Map<String, Object>> pdis =
+                    (List<Map<String, Object>>) item.get("pdis");
+
+            if (pdis == null || pdis.isEmpty()) {
+                sb.append("PDIs: (no hay PDIs para este hecho)\n");
+            } else {
+                sb.append("PDIs:\n");
+                for (Map<String, Object> pdi : pdis) {
+                    String pdiId   = String.valueOf(pdi.get("id"));
+                    String desc    = String.valueOf(pdi.get("descripcion"));
+                    List<String> etiquetasList = (List<String>) pdi.get("tags");
+                    Set<String> etiquetas = etiquetasList != null
+                            ? new LinkedHashSet<>(etiquetasList)
+                            : Set.of();
+
+                    sb.append("  - ID: ").append(pdiId).append("\n");
+                    if (desc != null && !"null".equals(desc)) {
+                        sb.append("    Descripción: ").append(desc).append("\n");
+                    }
+                    if (!etiquetas.isEmpty()) {
+                        sb.append("    Tags: ").append(etiquetas).append("\n");
+                    }
+                }
+            }
+
+            sb.append("-------------------------\n");
         }
 
         return sb.toString();
     }
+
 
 
 
